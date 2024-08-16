@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>채팅방</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>채팅방: {{ room_name }}</h1>
+        <nav>
+            <a href="{% url 'home' %}">홈으로</a>
+            <a href="{% url 'messenger:chat_list' %}">채팅방 목록</a>
+        </nav>
+    </header>
+    <main>
+        <div id="chat-log">
+            {% for message in messages %}
+                <div><strong>{{ message.sender.username }}:</strong> {{ message.content }}</div>
+            {% empty %}
+                <div>채팅 내용이 없습니다.</div>
+            {% endfor %}
+        </div>
+        <form id="chat-form">
+            <input id="message-input" type="text" placeholder="메시지를 입력하세요...">
+            <button type="submit">전송</button>
+        </form>
+    </main>
+    <script src="{% static 'js/chat.js' %}"></script>
+</body>
+</html>

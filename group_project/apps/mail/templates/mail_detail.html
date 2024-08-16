@@ -1,0 +1,57 @@
+
+오류 메시지 AttributeError: module 'apps.mail.views' has no attribute 'mail_detail'는 apps.mail.views 모듈에서 mail_detail이라는 뷰가 정의되어 있지 않다는 것을 의미합니다. 이 문제를 해결하려면 다음 단계를 수행해야 합니다:
+
+1. mail_detail 뷰 함수 추가
+mail_detail 뷰 함수를 views.py에 추가하여 특정 메일의 상세 내용을 보여줄 수 있도록 합니다.
+
+python
+코드 복사
+# apps/mail/views.py
+
+from django.shortcuts import render, get_object_or_404
+from .models import Mail
+
+def mail_detail(request, mail_id):
+    mail = get_object_or_404(Mail, id=mail_id)
+    return render(request, 'mail_detail.html', {'mail': mail})
+2. mail_detail.html 템플릿 추가
+메일의 상세 내용을 보여줄 mail_detail.html 템플릿을 추가합니다. 이 파일을 templates 디렉토리 아래의 mail 디렉토리에 추가합니다.
+
+html
+코드 복사
+<!-- apps/mail/templates/mail_detail.html -->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메일 상세보기</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>메일 상세보기</h1>
+            <a href="{% url 'mail:mail_list' %}" class="button">메일 목록</a>
+        </div>
+    </header>
+    <main>
+        <div class="main-container">
+            <h2>제목: {{ mail.subject }}</h2>
+            <p><strong>보낸 사람:</strong> {{ mail.sender }}</p>
+            <p><strong>받는 사람:</strong> {{ mail.recipient }}</p>
+            <p><strong>내용:</strong> {{ mail.body }}</p>
+            {% if mail.attachments.all %}
+                <h3>첨부파일:</h3>
+                <ul>
+                    {% for attachment in mail.attachments.all %}
+                        <li><a href="{{ attachment.file.url }}" download>{{ attachment.file.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

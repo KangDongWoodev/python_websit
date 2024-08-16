@@ -1,0 +1,82 @@
+html
+코드 복사
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메일 목록</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* 추가된 스타일을 여기에 넣습니다. */
+        .logo-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .logo-container a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <a href="{% url 'home' %}">DGS 그룹웨어</a>
+    </div>
+    <header>
+        <div class="header-container">
+            <h1>메일 목록</h1>
+            <a href="{% url 'mail:compose_mail' %}" class="button">메일 작성</a>
+        </div>
+    </header>
+    <main>
+        <div class="main-container">
+            <!-- Navigation between received and sent mails -->
+            <nav>
+                <a href="{% url 'mail:mail_list' %}?filter=received">받은 메일함</a>
+                <a href="{% url 'mail:mail_list' %}?filter=sent">보낸 메일함</a>
+            </nav>
+            <ul>
+                {% if filter == 'received' %}
+                    {% if received_mails %}
+                        {% for mail in received_mails %}
+                            <li>
+                                <strong>보낸 사람:</strong> {{ mail.sender }}<br>
+                                <strong>제목:</strong> {{ mail.subject }}<br>
+                                <strong>내용:</strong> {{ mail.body|slice:":100" }}<br>
+                                <a href="{% url 'mail:mail_detail' mail.id %}">상세보기</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li>받은 메일이 없습니다.</li>
+                    {% endif %}
+                {% elif filter == 'sent' %}
+                    {% if sent_mails %}
+                        {% for mail in sent_mails %}
+                            <li>
+                                <strong>받는 사람:</strong> {{ mail.recipient }}<br>
+                                <strong>제목:</strong> {{ mail.subject }}<br>
+                                <strong>내용:</strong> {{ mail.body|slice:":100" }}<br>
+                                <a href="{% url 'mail:mail_detail' mail.id %}">상세보기</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li>보낸 메일이 없습니다.</li>
+                    {% endif %}
+                {% else %}
+                    <li>필터를 선택해 주세요.</li>
+                {% endif %}
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

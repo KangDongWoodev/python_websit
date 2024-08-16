@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>채팅방 목록</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>채팅방 목록</h1>
+        <nav>
+            <a href="{% url 'home' %}">홈으로</a>
+        </nav>
+    </header>
+    <main>
+        <ul>
+            {% for room in rooms %}
+                <li><a href="{% url 'messenger:chat_room' room_name=room.name %}">{{ room.name }}</a></li>
+            {% empty %}
+                <li>채팅방이 없습니다.</li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>
