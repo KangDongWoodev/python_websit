@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'apps.accounts',  # 계정 앱
     'apps.attendance',  # 출석 앱
     'apps.messenger',  # 메신저 앱
-    'apps.scheduler',  # 일정 앱
+    'apps.scheduler',  # 'scheduler' 앱이 여기에 포함되어야 함
     'apps.mail',  # 메일 앱
     'channels',
 ]

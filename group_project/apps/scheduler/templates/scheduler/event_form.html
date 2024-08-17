@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{{ event.title }}</h1>
+        <a href="{% url 'scheduler:calendar' %}" class="button">달력으로 돌아가기</a>
+    </header>
+    <main>
+        <h2>상세 정보</h2>
+        <p><strong>제목:</strong> {{ event.title }}</p>
+        <p><strong>설명:</strong> {{ event.description }}</p>
+        <p><strong>시작일:</strong> {{ event.start_date }}</p>
+        <p><strong>종료일:</strong> {{ event.end_date }}</p>
+        <p><strong>공개 여부:</strong> {{ event.is_public|yesno:"공개,비공개" }}</p>
+        <p><strong>등록일:</strong> {{ event.created_at }}</p>
+    </main>
+</body>
+</html>

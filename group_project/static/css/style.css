@@ -269,3 +269,23 @@ main {
 .button:hover {
     background-color: #0056b3;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+tbody td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+thead th, tbody td {
+    text-align: center;
+}
